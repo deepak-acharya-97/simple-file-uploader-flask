@@ -1,6 +1,7 @@
 import os
 from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
+from tabula import read_pdf
 from random import randint
 
 UPLOAD_FOLDER = 'static\\uploaded-pdfs'
@@ -23,6 +24,7 @@ def loadMasterPage():
         filename = secure_filename(file.filename)
         path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(path)
+        pdf = read_pdf(path)
         return redirect(request.url)
 
 if __name__ == '__main__':
