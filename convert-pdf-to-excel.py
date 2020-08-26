@@ -3,7 +3,7 @@ from random import randint
 
 app=Flask(__name__)
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def loadMasterPage():
     return render_template('index.html')
 
