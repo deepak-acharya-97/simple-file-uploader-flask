@@ -12,7 +12,6 @@
 
     <div class="jumbotron text-center">
         <h1>PDF to excel converter</h1>
-        <p>Upload a pdf file</p>
     </div>
 
     <div class="container">
@@ -29,10 +28,30 @@
                 </div>
             </div>
         </form>
+        {% if is_success %}
+        <div class="row alert-row" style="padding-top: 5%">
+            <div class="col-sm-12">
+                <div class="alert alert-success text-center font-weight-bold" role="alert">
+                    PDF file processed successfully!
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <a class="btn btn-primary" href={{url_for('download_file', filename = filename)}}" style="float: right;">Download the file here.</a>
+            </div>
+        </div>
+        {% endif %}
+
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '[type=file]', function() {
+                $(".alert-row").remove();
+            });
+        });
+    </script>
 </body>
 
 </html>
