@@ -35,8 +35,11 @@
                     PDF file processed successfully!
                 </div>
             </div>
-            <div class="col-sm-12">
-                <a class="btn btn-primary" href={{url_for('download_file', filename = filename)}}" style="float: right;">Download the file here.</a>
+            <div class="col-sm-3">
+                <a class="btn btn-primary" target="_blank" href={{url_for('preview_pdf', filename = filename)}} >Click here to preview pdf</a>
+            </div>
+            <div class="offset-sm-6 col-sm-3">
+                <a class="btn btn-primary" href={{url_for('download_file', filename = filename)}} style="float: right;">Download the file here.</a>
             </div>
         </div>
         {% endif %}
