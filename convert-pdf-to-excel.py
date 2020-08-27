@@ -5,6 +5,7 @@ from tabula import read_pdf
 from random import randint
 
 UPLOAD_FOLDER = 'static\\uploaded-pdfs'
+PROCESSED_EXCEL_FOLDER = "static\\excels"
 app=Flask(__name__, static_url_path='', static_folder='static')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -31,15 +32,24 @@ def loadMasterPage():
         filename = secure_filename(file.filename)
         path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(path)
-        pdf = read_pdf(path)
+        excel_file_name = filename.split(".")[0]+'.xlsx'
+        excel_path = os.path.join(PROCESSED_EXCEL_FOLDER, excel_file_name)
         return redirect(url_for("loadMasterPage", is_success = True, filename = filename))
 
 @app.route('/result/<filename>')
 def download_file(filename):
-    path = path = os.path.join("static", "result.xlsx")
-    file =  open(path, 'rb')
     attachment_filename = filename.split(".")[0]+".xlsx"
+    path = os.path.join(PROCESSED_EXCEL_FOLDER, attachment_filename)
+    file =  open(path, 'rb')
     return send_file(file, as_attachment = True, attachment_filename=attachment_filename)
+
+@app.route('/previewpdf/<filename>')
+def preview_pdf(filename):
+    print(filename)
+    path = os.path.join(UPLOAD_FOLDER, filename)
+    print(path)
+    file =  open(path, 'rb')
+    return send_file(file, attachment_filename=filename)
 
 if __name__ == '__main__':
     port=randint(1025,9999)
